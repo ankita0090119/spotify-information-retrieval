@@ -1,7 +1,5 @@
 # ══════════════════════════════════════════════════════════════
-# SPOTIFY INFORMATION RETRIEVAL — COMPLETE FINAL VERSION
-# B.Tech AI/ML | IGDTUW | Ankita Prajapati
-# Run each cell top to bottom. Do not skip any cell.
+# SPOTIFY INFORMATION RETRIEVAL 
 # ══════════════════════════════════════════════════════════════
 
 
@@ -24,7 +22,7 @@ print("All libraries imported successfully!")
 
 
 # ── CELL 2: Load dataset ─────────────────────────────────────
-# Make sure your dataset CSV is uploaded to Colab first
+
 df = pd.read_csv('dataset[1].csv')
 print('Raw dataset shape:', df.shape)
 print(df.head(3))
@@ -35,8 +33,8 @@ df.dropna(subset=['track_name', 'artists'], inplace=True)
 df.drop_duplicates(subset='track_id', inplace=True)
 df.reset_index(drop=True, inplace=True)
 
-# Expand short genre codes into descriptive phrases
-# so TF-IDF has richer text to work with
+# Expanding short genre codes into descriptive phrases
+# so that TF-IDF has richer text to work with
 genre_map = {
     'j-dance': 'japanese dance electronic',
     'j-pop':   'japanese pop',
@@ -90,8 +88,7 @@ print(f'TF-IDF matrix shape: {tfidf_matrix.shape}')
 # Score = 0.7 × TF-IDF relevance
 #       + 0.2 × popularity (normalised)
 #       + 0.1 × energy
-# This mirrors how real search engines blend relevance
-# with engagement signals — exactly what Spotify does.
+
 
 def tfidf_search(query, top_n=5):
     query_vec = vectorizer.transform([query])
@@ -157,7 +154,7 @@ print(bm25_search('rock guitar').to_string(index=False))
 
 
 # ── CELL 7: FIXED Content-Based Recommender ──────────────────
-# BUG IN ORIGINAL: MinMaxScaler + cosine similarity
+# Earlier Problem: MinMaxScaler + cosine similarity
 # gives ~0.999 for every song because all vectors point
 # in nearly the same direction after scaling.
 # FIX: StandardScaler + Euclidean distance
